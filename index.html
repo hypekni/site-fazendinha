@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fazendinha Tintas – Distribuidores Oficiais Maza</title>
+  <title>Fazendinha Tintas – Distribuidor Oficial Maza</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -84,10 +84,13 @@
       margin-bottom: 2.2rem;
     }
     .hero-logo-wrap img {
-      width: 320px; height: 320px;
+      width: 460px; height: 460px;
       object-fit: contain;
       display: block;
       filter: drop-shadow(0 0 24px rgba(245,197,24,.3));
+      image-rendering: smooth;
+      transform: translateZ(0);
+      backface-visibility: hidden;
     }
 
     /* Logo Maza no hero — clip-path corta exatamente no oval da JPG */
@@ -155,6 +158,12 @@
       font-style: normal; color: var(--amarelo);
     }
 
+    .hero-desde {
+      position: relative; z-index: 1;
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: .85rem; letter-spacing: .22em; text-transform: uppercase;
+      color: var(--amarelo); margin-bottom: 1.4rem;
+    }
     .hero-sub {
       position: relative; z-index: 1;
       color: rgba(255,255,255,.5);
@@ -382,6 +391,18 @@
       object-fit: contain; object-position: center;
       margin-bottom: .4rem;
     }
+    .marca-logo-init {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--verm);
+      color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: 1.5rem;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: .4rem;
+      flex-shrink: 0;
+    }
+    .marca-card.destaque .marca-logo-init { background: var(--amarelo); color: var(--preto); }
     .marca-nome {
       font-family: 'Montserrat', sans-serif; font-weight: 800;
       font-size: 1rem; color: var(--preto); line-height: 1.2;
@@ -549,12 +570,13 @@
   <div class="hero-maza-wrap">
     <img class="hero-maza-img" src="logo-maza.jpg" alt="Tintas Maza" />
     <div class="hero-maza-label">
-      <strong>Distribuidores Oficiais</strong>
+      <strong>Distribuidor Oficial</strong>
       Tintas Maza
     </div>
   </div>
 
-  <h1>Colorindo sua vida<br><em>com qualidade</em></h1>
+  <h1>COLORINDO VIDAS</h1>
+  <p class="hero-desde">DESDE 2004</p>
   <p class="hero-sub">Tintas, texturas e acabamentos para cada projeto — com o atendimento especializado que você merece.</p>
 
   <div class="hero-ctas">
@@ -579,7 +601,7 @@
          style="width:80px;height:56px;object-fit:cover;clip-path:ellipse(44% 34% at 50% 50%)" />
     <div>
       <strong style="font-size:1rem">Maza</strong>
-      <span>Distribuidores oficiais</span>
+      <span>Distribuidor Oficial</span>
     </div>
   </div>
 </div>
@@ -607,7 +629,7 @@
       <p class="section-text">
         A Fazendinha Tintas nasceu em 2004 com uma missão simples: levar cor, qualidade e atendimento de excelência para cada cantinho de Curitiba e região. Ao longo de mais de 20 anos, construímos relações de confiança com clientes, pintores, construtoras e arquitetos, sempre com os melhores produtos do mercado.
         <br /><br />
-        Como Distribuidores Oficiais Maza, garantimos acesso a toda a linha de tintas, texturas e impermeabilizantes com o suporte técnico que o seu projeto merece.
+        Como Distribuidor Oficial Maza, garantimos acesso a toda a linha de tintas, texturas e impermeabilizantes com o suporte técnico que o seu projeto merece.
       </p>
     </div>
 
@@ -681,146 +703,146 @@
     <div class="marcas-grid fade-in">
 
       <a href="https://www.maza.com.br" target="_blank" rel="noopener" class="marca-card destaque">
-        <img class="marca-logo" src="https://logo.clearbit.com/maza.com.br" alt="Maza" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/maza.com.br" alt="Maza" onerror="logoFallback(this)" />
         <div class="marca-nome">Maza</div>
         <div class="marca-cat">Tintas &amp; Texturas</div>
         <div class="marca-badge-of">Dist. Oficial</div>
       </a>
 
       <a href="https://www.suvinil.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/suvinil.com.br" alt="Suvinil" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/suvinil.com.br" alt="Suvinil" onerror="logoFallback(this)" />
         <div class="marca-nome">Suvinil</div>
         <div class="marca-cat">Tintas &amp; Texturas</div>
       </a>
 
       <a href="https://www.lukscolor.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/lukscolor.com.br" alt="Lukscolor" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/lukscolor.com.br" alt="Lukscolor" onerror="logoFallback(this)" />
         <div class="marca-nome">Lukscolor</div>
         <div class="marca-cat">Tintas &amp; Complementos</div>
       </a>
 
       <a href="https://brasilux.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/brasilux.com.br" alt="Brasilux" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/brasilux.com.br" alt="Brasilux" onerror="logoFallback(this)" />
         <div class="marca-nome">Brasilux</div>
         <div class="marca-cat">Tintas &amp; Vernizes</div>
       </a>
 
       <a href="https://www.ciacollor.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/ciacollor.com.br" alt="Ciacollor" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/ciacollor.com.br" alt="Ciacollor" onerror="logoFallback(this)" />
         <div class="marca-nome">Ciacollor</div>
         <div class="marca-cat">Tintas &amp; Complementos</div>
       </a>
 
       <a href="http://www.tintascastelense.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/tintascastelense.com.br" alt="Castelense" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/tintascastelense.com.br" alt="Castelense" onerror="logoFallback(this)" />
         <div class="marca-nome">Castelense</div>
         <div class="marca-cat">Tintas</div>
       </a>
 
       <a href="https://www.chesiquimica.com.br/site/linha-etaniz/" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/chesiquimica.com.br" alt="Etaniz" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/chesiquimica.com.br" alt="Etaniz" onerror="logoFallback(this)" />
         <div class="marca-nome">Etaniz</div>
         <div class="marca-cat">Impermeabilizantes</div>
       </a>
 
       <a href="https://unipega.com" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/unipega.com" alt="Unipega" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/unipega.com" alt="Unipega" onerror="logoFallback(this)" />
         <div class="marca-nome">Unipega</div>
         <div class="marca-cat">Colas &amp; Adesivos</div>
       </a>
 
       <a href="https://www.pinceisatlas.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/pinceisatlas.com.br" alt="Atlas" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/pinceisatlas.com.br" alt="Atlas" onerror="logoFallback(this)" />
         <div class="marca-nome">Atlas</div>
         <div class="marca-cat">Pincéis &amp; Rolos</div>
       </a>
 
       <a href="https://condor.ind.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/condor.ind.br" alt="Condor" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/condor.ind.br" alt="Condor" onerror="logoFallback(this)" />
         <div class="marca-nome">Condor</div>
         <div class="marca-cat">Pincéis &amp; Ferramentas</div>
       </a>
 
       <a href="https://www.pinceisroma.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/pinceisroma.com.br" alt="Roma" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/pinceisroma.com.br" alt="Roma" onerror="logoFallback(this)" />
         <div class="marca-nome">Roma</div>
         <div class="marca-cat">Pincéis &amp; Rolos</div>
       </a>
 
       <a href="https://www.nortonabrasives.com/pt-br/home" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/nortonabrasives.com" alt="Norton" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/nortonabrasives.com" alt="Norton" onerror="logoFallback(this)" />
         <div class="marca-nome">Norton</div>
         <div class="marca-cat">Abrasivos &amp; Lixas</div>
       </a>
 
       <a href="https://www.mirka.com" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/mirka.com" alt="Mirka" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/mirka.com" alt="Mirka" onerror="logoFallback(this)" />
         <div class="marca-nome">Mirka</div>
         <div class="marca-cat">Abrasivos</div>
       </a>
 
       <a href="https://purplex.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/purplex.com.br" alt="Purplex" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/purplex.com.br" alt="Purplex" onerror="logoFallback(this)" />
         <div class="marca-nome">Purplex</div>
         <div class="marca-cat">Lixas &amp; Abrasivos</div>
       </a>
 
       <a href="https://orbiquimica.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/orbiquimica.com.br" alt="Orbiflex" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/orbiquimica.com.br" alt="Orbiflex" onerror="logoFallback(this)" />
         <div class="marca-nome">Orbiflex</div>
         <div class="marca-cat">Selantes &amp; Adesivos</div>
       </a>
 
       <a href="https://www.sigmatools.com.br/site/" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/sigmatools.com.br" alt="SGT Tools" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/sigmatools.com.br" alt="SGT Tools" onerror="logoFallback(this)" />
         <div class="marca-nome">SGT Tools</div>
         <div class="marca-cat">Ferramentas</div>
       </a>
 
       <a href="https://www.vonder.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/vonder.com.br" alt="Vonder" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/vonder.com.br" alt="Vonder" onerror="logoFallback(this)" />
         <div class="marca-nome">Vonder</div>
         <div class="marca-cat">Ferramentas Elétricas</div>
       </a>
 
       <a href="https://www.dwtbrasil.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/dwtbrasil.com.br" alt="DWT" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/dwtbrasil.com.br" alt="DWT" onerror="logoFallback(this)" />
         <div class="marca-nome">DWT</div>
         <div class="marca-cat">Ferramentas Elétricas</div>
       </a>
 
       <a href="https://www.kers.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/kers.com.br" alt="Kers" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/kers.com.br" alt="Kers" onerror="logoFallback(this)" />
         <div class="marca-nome">Kers</div>
         <div class="marca-cat">Polimentos &amp; Cuidados</div>
       </a>
 
       <a href="https://menzerna.com" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/menzerna.com" alt="Menzerna" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/menzerna.com" alt="Menzerna" onerror="logoFallback(this)" />
         <div class="marca-nome">Menzerna</div>
         <div class="marca-cat">Polimentos</div>
       </a>
 
       <a href="https://pt.roberlo.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/roberlo.com" alt="Roberlo" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/roberlo.com" alt="Roberlo" onerror="logoFallback(this)" />
         <div class="marca-nome">Roberlo</div>
         <div class="marca-cat">Tintas Automotivas</div>
       </a>
 
       <a href="https://www.autoamerica.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/autoamerica.com.br" alt="Autoamerica" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/autoamerica.com.br" alt="Autoamerica" onerror="logoFallback(this)" />
         <div class="marca-nome">Autoamerica</div>
         <div class="marca-cat">Produtos Automotivos</div>
       </a>
 
       <a href="https://eurotechniker.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/eurotechniker.com.br" alt="Eurotechniker" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/eurotechniker.com.br" alt="Eurotechniker" onerror="logoFallback(this)" />
         <div class="marca-nome">Eurotechniker</div>
         <div class="marca-cat">Produtos Automotivos</div>
       </a>
 
       <a href="https://www.compel.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="https://logo.clearbit.com/compel.com.br" alt="Compel" onerror="this.style.display='none'" />
+        <img class="marca-logo" src="https://logo.clearbit.com/compel.com.br" alt="Compel" onerror="logoFallback(this)" />
         <div class="marca-nome">Compel</div>
         <div class="marca-cat">Complementos Automotivos</div>
       </a>
@@ -838,7 +860,7 @@
     <div class="contato-top">
       <div class="contato-brand">
         <img class="contato-brand-logo" src="logo-fazendinha.png" alt="Fazendinha Tintas" onerror="this.style.display='none'" />
-        <p>Distribuidores Oficiais Maza. Mais de 20 anos colorindo vidas com qualidade, confiança e atendimento especializado em Curitiba – PR.</p>
+        <p>Distribuidor Oficial Maza. Mais de 20 anos colorindo vidas com qualidade, confiança e atendimento especializado em Curitiba – PR.</p>
       </div>
 
       <div class="contato-col">
@@ -875,7 +897,7 @@
 
     <div class="contato-bottom">
       <p>© 2004–2026 Fazendinha Comércio de Tintas. Todos os direitos reservados.</p>
-      <div class="maza-badge-footer">Distribuidores Oficiais Maza</div>
+      <div class="maza-badge-footer">Distribuidor Oficial Maza</div>
     </div>
 
   </div>
@@ -889,6 +911,15 @@
 </div>
 
 <script>
+  /* ── Fallback visual para logos de marcas ── */
+  function logoFallback(img) {
+    const div = document.createElement('div');
+    div.className = 'marca-logo-init';
+    div.textContent = img.alt[0].toUpperCase();
+    img.parentNode.insertBefore(div, img);
+    img.remove();
+  }
+
   /* ── Fumaça engolindo a logo no scroll ── */
   const smoke  = document.getElementById('heroSmoke');
   const heroEl = document.getElementById('inicio');
