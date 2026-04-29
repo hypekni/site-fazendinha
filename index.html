@@ -118,23 +118,19 @@
       display: block; color: var(--amarelo); font-size: .82rem;
     }
 
-    /* Fumaça preta que sobe e engole a logo no scroll */
+    /* Sombra que sobe do texto e engole a logo no scroll */
     .hero-smoke {
       position: absolute;
-      bottom: -30px; left: 50%; transform: translateX(-50%);
-      width: 500px; height: 380px;
+      top: 0; left: 0; right: 0; bottom: 0;
       pointer-events: none;
+      z-index: 2;
+      background: linear-gradient(to top, #000 0%, rgba(0,0,0,.96) 28%, rgba(0,0,0,.65) 55%, transparent 80%);
       opacity: 0;
-      z-index: 3;
-      background:
-        radial-gradient(ellipse 80% 60% at 50% 100%, #000 0%, transparent 70%),
-        radial-gradient(ellipse 60% 50% at 35% 90%,  rgba(0,0,0,.9) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 50% at 65% 85%,  rgba(0,0,0,.9) 0%, transparent 65%),
-        linear-gradient(to top, #000 0%, rgba(0,0,0,.7) 40%, transparent 100%);
+      transform: translateY(52%);
     }
 
     .hero-badge {
-      position: relative; z-index: 1;
+      position: relative; z-index: 3;
       display: inline-flex; align-items: center; gap: .55rem;
       background: var(--amarelo);
       color: var(--preto);
@@ -148,7 +144,7 @@
     .hero-badge::before { content: '★ '; }
 
     #inicio h1 {
-      position: relative; z-index: 1;
+      position: relative; z-index: 3;
       font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: clamp(2.2rem, 5.5vw, 3.8rem);
       color: #fff; line-height: 1.12;
@@ -159,13 +155,13 @@
     }
 
     .hero-desde {
-      position: relative; z-index: 1;
+      position: relative; z-index: 3;
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .85rem; letter-spacing: .22em; text-transform: uppercase;
       color: var(--amarelo); margin-bottom: 1.4rem;
     }
     .hero-sub {
-      position: relative; z-index: 1;
+      position: relative; z-index: 3;
       color: rgba(255,255,255,.5);
       font-size: 1.05rem; max-width: 500px;
       margin: 0 auto 2.6rem;
@@ -173,7 +169,7 @@
     }
 
     .hero-ctas {
-      position: relative; z-index: 1;
+      position: relative; z-index: 3;
       display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
     }
     .btn-cta {
@@ -206,7 +202,7 @@
       color: rgba(255,255,255,.28);
       font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
       display: flex; flex-direction: column; align-items: center; gap: .4rem;
-      z-index: 1;
+      z-index: 3;
     }
     .hero-scroll::after {
       content: ''; width: 1px; height: 38px;
@@ -592,7 +588,6 @@
   <div class="hero-logo-wrap">
     <img src="logo-fazendinha.png" alt="Fazendinha Tintas – Colorindo Vidas"
          onerror="this.style.display='none'" />
-    <div class="hero-smoke" id="heroSmoke"></div>
   </div>
 
   <div class="hero-maza-wrap">
@@ -612,6 +607,7 @@
     <a href="#o-local" class="btn-ghost">Ver nossa loja →</a>
   </div>
 
+  <div class="hero-smoke" id="heroSmoke"></div>
 </section>
 
 <!-- STRIP DE NÚMEROS -->
@@ -955,13 +951,13 @@
     img.remove();
   }
 
-  /* ── Fumaça engolindo a logo no scroll ── */
+  /* ── Sombra sobe do texto e engole a logo no scroll ── */
   const smoke  = document.getElementById('heroSmoke');
   const heroEl = document.getElementById('inicio');
   window.addEventListener('scroll', () => {
-    const prog = Math.min(window.scrollY / (heroEl.offsetHeight * 0.45), 1);
-    smoke.style.opacity  = prog;
-    smoke.style.height   = (380 + prog * 120) + 'px';
+    const prog = Math.min(window.scrollY / (heroEl.offsetHeight * 0.5), 1);
+    smoke.style.opacity   = prog;
+    smoke.style.transform = `translateY(${(1 - prog) * 52}%)`;
   }, { passive: true });
 
   /* ── Fade-in no scroll ── */
