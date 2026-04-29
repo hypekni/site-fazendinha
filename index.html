@@ -500,6 +500,34 @@
     }
 
     /* ══════════════════════════════
+       VER MAIS – QUEM SOMOS
+    ══════════════════════════════ */
+    .quem-mais {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height .55s ease, opacity .45s ease;
+    }
+    .quem-mais.open {
+      max-height: 600px;
+      opacity: 1;
+    }
+    .btn-ver-mais {
+      margin-top: 1.4rem;
+      background: none;
+      border: 2px solid var(--verm);
+      color: var(--verm);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700; font-size: .82rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .55rem 1.6rem; border-radius: 50px;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      display: inline-block;
+    }
+    .btn-ver-mais:hover { background: var(--verm); color: #fff; }
+
+    /* ══════════════════════════════
        FADE IN NO SCROLL
     ══════════════════════════════ */
     .fade-in {
@@ -626,13 +654,18 @@
     <div class="quem-texto fade-in">
       <span class="section-tag">Nossa história</span>
       <h2 class="section-title">Quem <span>Somos</span></h2>
-      <p class="section-text">
-        A Fazendinha Tintas nasceu em 2004 com uma missão simples: levar cor, qualidade e atendimento de excelência para cada cantinho de Curitiba e região. Ao longo de mais de 20 anos, construímos relações de confiança com clientes, pintores, construtoras e arquitetos, sempre com os melhores produtos do mercado.
-        <br /><br />
-        Na ativa, da terceira geração no processo: <strong>Welinton Guailer Souto Junior</strong> e <strong>Pedro Henrique Kniggendorf</strong>. Nosso compromisso diário é realizar negócios sólidos, onde a credibilidade seja a garantia da satisfação de todos os envolvidos. Buscamos sempre entregar o melhor custo-benefício e a perfeição na execução de cada obra.
-        <br /><br />
-        Mais do que uma loja, o clima familiar é o verdadeiro espírito da empresa. Essa essência transcende o nosso atendimento, transformando clientes em grandes amigos.
-      </p>
+      <div class="section-text">
+        <p>Nossa trajetória começou em 1989, quando o Sr. Reginato Kniggendorf e a Dona Sirleth Maria ingressaram no ramo de tintas, contando com o apoio essencial de seus três filhos. Em nossos primeiros anos, a empresa se especializou no segmento automotivo, oferecendo consultoria de excelência e venda técnica de uma ampla variedade de produtos.</p>
+        <p style="margin-top:1rem">Um grande marco ocorreu em 2004, quando assumimos oficialmente o nome <strong>Tintas Fazendinha</strong>, sob a gestão de Reginato Kniggendorf Junior e Gilcelaine. A partir desse momento, expandimos nossos horizontes para os segmentos industrial e imobiliário, além de ferramentas e acessórios para pintura — sempre guiados pela honestidade, transparência e paixão por servir.</p>
+
+        <div class="quem-mais" id="quemMaisTexto">
+          <p style="margin-top:1rem">Hoje, a Tintas Fazendinha colore vidas e sonhos. Contamos com uma equipe altamente capacitada e seguimos honrando nosso legado familiar, agora com a participação ativa da terceira geração no processo: <strong>Welinton Guailer Souto Junior</strong> e <strong>Pedro Henrique Kniggendorf</strong>.</p>
+          <p style="margin-top:1rem">Nosso compromisso diário é realizar negócios sólidos, onde a credibilidade seja a garantia da satisfação de todos os envolvidos. Buscamos sempre entregar o melhor custo-benefício e a perfeição na execução de cada obra.</p>
+          <p style="margin-top:1rem">Mais do que uma loja, o clima familiar é o verdadeiro espírito da empresa. Essa essência transcende o nosso atendimento, transformando clientes em grandes amigos.</p>
+        </div>
+
+        <button class="btn-ver-mais" id="btnVerMais" onclick="toggleVerMais()">Ver mais ↓</button>
+      </div>
     </div>
 
   </div>
@@ -958,6 +991,14 @@
     img.classList.toggle('zoomed');
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  /* ── Ver mais – Quem Somos ── */
+  function toggleVerMais() {
+    const bloco = document.getElementById('quemMaisTexto');
+    const btn   = document.getElementById('btnVerMais');
+    const open  = bloco.classList.toggle('open');
+    btn.textContent = open ? 'Ver menos ↑' : 'Ver mais ↓';
+  }
 
   /* ── Flashlights ── */
   (function () {
