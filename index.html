@@ -197,6 +197,20 @@
       transition: border-color .2s, color .2s;
     }
     .btn-ghost:hover { border-color: var(--amarelo); color: var(--amarelo); }
+    .btn-ml {
+      display: inline-block;
+      background: #FFE600; color: #333;
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: .95rem; text-decoration: none;
+      padding: .9rem 2.4rem; border-radius: 50px;
+      box-shadow: 0 6px 24px rgba(255,230,0,.35);
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .btn-ml:hover {
+      background: #f0d800;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(255,230,0,.5);
+    }
 
     .hero-scroll {
       position: absolute; bottom: 28px; left: 50%;
@@ -611,6 +625,45 @@
       .photo-slot-full { grid-column: span 1; }
       .hero-ctas { flex-direction: column; align-items: center; }
     }
+
+    /* ══════════════════════════════
+       BOTÃO FLUTUANTE ML
+    ══════════════════════════════ */
+    .ml-floating {
+      position: fixed;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 150;
+      background: #FFE600;
+      color: #222;
+      border-radius: 10px 0 0 10px;
+      padding: 1.4rem .75rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      text-decoration: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: .62rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      box-shadow: -4px 0 20px rgba(0,0,0,.2);
+      transition: transform .25s ease, box-shadow .25s;
+    }
+    .ml-floating:hover {
+      transform: translateY(-50%) translateX(-5px);
+      box-shadow: -8px 0 28px rgba(255,230,0,.45);
+    }
+    .ml-floating .ml-icon { font-size: 1.25rem; }
+    .ml-floating .ml-text {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    @media (max-width: 620px) {
+      .ml-floating { display: none; }
+    }
   </style>
 </head>
 <body>
@@ -652,6 +705,7 @@
 
   <div class="hero-ctas">
     <a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener" class="btn-cta">💬 Fale com a gente</a>
+    <a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha" target="_blank" rel="noopener" class="btn-ml">🛒 Compre pelo Mercado Livre</a>
     <a href="#o-local" class="btn-ghost">Ver nossa loja →</a>
   </div>
 
@@ -959,6 +1013,13 @@
             <a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener">linktr.ee/tintasfazendinha</a>
           </div>
         </div>
+        <div class="contato-item">
+          <span class="contato-icon">🛒</span>
+          <div>
+            <span style="display:block;color:rgba(255,255,255,.32);font-size:.71rem;margin-bottom:.2rem">Compre Online</span>
+            <a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha" target="_blank" rel="noopener" style="color:#FFE600;font-weight:600">Mercado Livre →</a>
+          </div>
+        </div>
       </div>
 
       <div class="contato-col">
@@ -1100,6 +1161,15 @@
     });
   })();
 </script>
+
+<!-- BOTÃO FLUTUANTE MERCADO LIVRE -->
+<a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha"
+   target="_blank" rel="noopener"
+   class="ml-floating"
+   title="Compre no Mercado Livre">
+  <span class="ml-icon">🛒</span>
+  <span class="ml-text">Compre Online</span>
+</a>
 
 </body>
 </html>
