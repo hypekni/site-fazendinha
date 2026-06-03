@@ -18,6 +18,8 @@
       --laranja:  #f07322;
       --cinza-cl: #f4f4f4;
       --cinza:    #555;
+      --whats:    #25D366;
+      --whats-dk: #128C7E;
     }
 
     /* ══════════════════════════════
@@ -29,7 +31,17 @@
       background: rgba(14,14,14,.97);
       backdrop-filter: blur(10px);
       border-bottom: 2px solid var(--verm);
-      display: flex; align-items: center; justify-content: center;
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+    }
+    .nav-logo {
+      display: flex; align-items: center; flex-shrink: 0;
+      text-decoration: none;
+    }
+    .nav-logo img {
+      height: 44px; width: auto; object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(245,197,24,.25));
     }
     .nav-links {
       list-style: none;
@@ -50,10 +62,25 @@
       height: 2px; background: var(--amarelo);
       transform: scaleX(0); transition: transform .25s;
     }
-    .nav-links a:hover { color: #fff; }
-    .nav-links a:hover::after { transform: scaleX(1); }
-
-    /* Linha vermelha sutil na borda inferior do nav */
+    .nav-links a:hover::after,
+    .nav-links a.active::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--amarelo); }
+    .nav-toggle {
+      display: none;
+      background: none; border: none;
+      cursor: pointer;
+      flex-direction: column; gap: 5px;
+      padding: 10px; margin-left: auto;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 24px; height: 2px;
+      background: #fff; border-radius: 2px;
+      transition: transform .3s ease, opacity .25s ease;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
     /* ══════════════════════════════
        HERO
@@ -67,8 +94,6 @@
       padding: 100px 5% 80px;
       position: relative; overflow: hidden;
     }
-
-    /* Brilho sutil atrás da logo */
     #inicio::before {
       content: '';
       position: absolute; top: 50%; left: 50%;
@@ -77,74 +102,50 @@
       background: radial-gradient(ellipse, rgba(180,20,20,.18) 0%, transparent 70%);
       pointer-events: none;
     }
-
-    /* Logo PNG com transparência real — sem blend mode necessário */
     .hero-logo-wrap {
       position: relative; z-index: 1;
       margin-bottom: 2.2rem;
     }
     .hero-logo-wrap img {
-      width: 320px; height: 320px;
-      object-fit: contain;
-      display: block;
-      filter: drop-shadow(0 0 20px rgba(245,197,24,.28));
-      image-rendering: auto;
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
-      backface-visibility: hidden;
-      will-change: transform;
+      width: 300px; height: 300px;
+      object-fit: contain; display: block;
+      filter: drop-shadow(0 0 24px rgba(245,197,24,.3));
     }
-
-    /* Logo Maza no hero — clip-path corta exatamente no oval da JPG */
     .hero-maza-wrap {
       position: relative; z-index: 1;
       display: flex; align-items: center; justify-content: center;
-      gap: 1rem;
-      margin-bottom: 1.8rem;
+      gap: 1rem; margin-bottom: 1.8rem;
     }
     .hero-maza-img {
       width: 110px; height: 77px;
-      object-fit: cover;
-      object-position: center 50%;
-      /* oval da Maza ocupa ~90% da largura e ~70% da altura da JPG */
+      object-fit: cover; object-position: center 50%;
       clip-path: ellipse(44% 34% at 50% 50%);
       display: block;
     }
     .hero-maza-label {
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .75rem; letter-spacing: .12em; text-transform: uppercase;
-      color: rgba(255,255,255,.55);
-      line-height: 1.5;
+      color: rgba(255,255,255,.55); line-height: 1.5;
     }
-    .hero-maza-label strong {
-      display: block; color: var(--amarelo); font-size: .82rem;
-    }
-
-    /* Sombra que sobe do texto e engole a logo no scroll */
+    .hero-maza-label strong { display: block; color: var(--amarelo); font-size: .82rem; }
     .hero-smoke {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      z-index: 2;
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none; z-index: 2;
       background: linear-gradient(to top, #000 0%, rgba(0,0,0,.97) 15%, rgba(0,0,0,.93) 40%, rgba(0,0,0,.87) 60%, rgba(0,0,0,.72) 78%, rgba(0,0,0,.5) 90%, rgba(0,0,0,.25) 100%);
-      opacity: 0;
-      transform: translateY(55%);
+      opacity: 0; transform: translateY(55%);
     }
-
     .hero-badge {
       position: relative; z-index: 3;
-      display: inline-flex; align-items: center; gap: .55rem;
-      background: var(--amarelo);
-      color: var(--preto);
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: var(--amarelo); color: var(--preto);
       font-family: 'Montserrat', sans-serif;
-      font-weight: 900; font-size: .85rem;
+      font-weight: 900; font-size: .82rem;
       letter-spacing: .09em; text-transform: uppercase;
       padding: .45rem 1.5rem; border-radius: 50px;
       box-shadow: 0 4px 24px rgba(245,197,24,.35);
       margin-bottom: 1.6rem;
     }
-    .hero-badge::before { content: '★ '; }
-
+    .hero-badge svg { width: 14px; height: 14px; flex-shrink: 0; }
     #inicio h1 {
       position: relative; z-index: 3;
       font-family: 'Montserrat', sans-serif; font-weight: 900;
@@ -152,10 +153,7 @@
       color: #fff; line-height: 1.12;
       max-width: 720px; margin-bottom: .9rem;
     }
-    #inicio h1 em {
-      font-style: normal; color: var(--amarelo);
-    }
-
+    #inicio h1 em { font-style: normal; color: var(--amarelo); }
     .hero-desde {
       position: relative; z-index: 3;
       font-family: 'Montserrat', sans-serif; font-weight: 700;
@@ -166,79 +164,68 @@
       position: relative; z-index: 3;
       color: rgba(255,255,255,.5);
       font-size: 1.05rem; max-width: 500px;
-      margin: 0 auto 2.6rem;
-      line-height: 1.7;
+      margin: 0 auto 2.6rem; line-height: 1.7;
     }
-
     .hero-ctas {
       position: relative; z-index: 3;
       display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
     }
     .btn-cta {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: .55rem;
       background: var(--verm); color: #fff;
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .95rem; text-decoration: none;
-      padding: .9rem 2.4rem; border-radius: 50px;
+      padding: .9rem 2.2rem; border-radius: 50px;
       box-shadow: 0 6px 24px rgba(204,23,23,.4);
       transition: transform .2s, box-shadow .2s, background .2s;
+      min-height: 48px;
     }
-    .btn-cta:hover {
-      background: var(--verm-cl);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(204,23,23,.5);
-    }
+    .btn-cta svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .btn-cta:hover { background: var(--verm-cl); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(204,23,23,.5); }
     .btn-ghost {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: .5rem;
       border: 2px solid rgba(255,255,255,.25); color: rgba(255,255,255,.8);
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .95rem; text-decoration: none;
-      padding: .9rem 2.4rem; border-radius: 50px;
-      transition: border-color .2s, color .2s;
+      padding: .9rem 2.2rem; border-radius: 50px;
+      transition: border-color .2s, color .2s; min-height: 48px;
     }
     .btn-ghost:hover { border-color: var(--amarelo); color: var(--amarelo); }
     .btn-ml {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: .55rem;
       background: #FFE600; color: #333;
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .95rem; text-decoration: none;
-      padding: .9rem 2.4rem; border-radius: 50px;
+      padding: .9rem 2.2rem; border-radius: 50px;
       box-shadow: 0 6px 24px rgba(255,230,0,.35);
-      transition: transform .2s, box-shadow .2s, background .2s;
+      transition: transform .2s, box-shadow .2s, background .2s; min-height: 48px;
     }
-    .btn-ml:hover {
-      background: #f0d800;
-      transform: translateY(-3px);
-      box-shadow: 0 12px 32px rgba(255,230,0,.5);
-    }
-
+    .btn-ml svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .btn-ml:hover { background: #f0d800; transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,230,0,.5); }
     .hero-scroll {
       position: absolute; bottom: 28px; left: 50%;
-      transform: translateX(-50%);
+      transform: translateX(-50%); z-index: 3;
+      display: flex; flex-direction: column; align-items: center; gap: .3rem;
       color: rgba(255,255,255,.28);
       font-size: .68rem; letter-spacing: .12em; text-transform: uppercase;
-      display: flex; flex-direction: column; align-items: center; gap: .4rem;
-      z-index: 3;
+      cursor: pointer;
     }
-    .hero-scroll::after {
-      content: ''; width: 1px; height: 38px;
-      background: rgba(255,255,255,.2);
-      animation: scrollLine 1.8s ease-in-out infinite;
+    .hero-scroll svg { width: 22px; height: 22px; animation: bounceDown 1.8s ease-in-out infinite; }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); opacity: .4; }
+      50% { transform: translateY(5px); opacity: 1; }
     }
-    @keyframes scrollLine { 0%,100%{opacity:.2} 50%{opacity:.85} }
 
     /* ══════════════════════════════
-       NÚMEROS (strip)
+       NÚMEROS
     ══════════════════════════════ */
     .numeros-strip {
-      background: var(--verm);
-      padding: 2.2rem 5%;
+      background: var(--verm); padding: 2.2rem 5%;
       display: flex; justify-content: center; gap: 5rem; flex-wrap: wrap;
     }
     .num-item { text-align: center; }
     .num-item strong {
-      display: block;
-      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      display: block; font-family: 'Montserrat', sans-serif; font-weight: 900;
       font-size: 2.2rem; color: #fff; line-height: 1;
     }
     .num-item span {
@@ -263,8 +250,7 @@
       display: inline-block;
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .7rem; letter-spacing: .16em; text-transform: uppercase;
-      color: var(--verm);
-      border-left: 3px solid var(--amarelo);
+      color: var(--verm); border-left: 3px solid var(--amarelo);
       padding-left: .6rem; margin-bottom: .9rem;
     }
     .section-title {
@@ -273,37 +259,38 @@
       color: var(--preto); line-height: 1.15; margin-bottom: 1.2rem;
     }
     .section-title span { color: var(--verm); }
-    .section-text {
-      color: var(--cinza); font-size: 1.03rem;
-      line-height: 1.9; max-width: 620px;
-    }
+    .section-text { color: var(--cinza); font-size: 1.03rem; line-height: 1.9; max-width: 620px; }
 
     /* ══════════════════════════════
        QUEM SOMOS
     ══════════════════════════════ */
-    #quem-somos { background: var(--cinza-cl); }
+    #quem-somos { background: var(--cinza-cl); position: relative; overflow: hidden; }
     .quem-inner {
       display: grid; grid-template-columns: 1fr 1fr;
-      gap: 6rem; align-items: center;
-      max-width: 1100px; margin: 0 auto;
+      gap: 6rem; align-items: center; max-width: 1100px; margin: 0 auto;
     }
     .quem-deco { position: relative; }
     .quem-foto {
       width: 100%; aspect-ratio: 4/3;
       border-radius: 18px; overflow: hidden;
       box-shadow: 0 16px 56px rgba(0,0,0,.18);
-      cursor: zoom-in; position: relative;
+      cursor: pointer; position: relative;
     }
-    .quem-foto img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .5s ease;
-    }
+    .quem-foto img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
     .quem-foto:hover img { transform: scale(1.04); }
-    .quem-foto::after {
-      content: '🔍';
-      position: absolute; bottom: 14px; right: 16px;
-      font-size: 1.3rem; opacity: .75; pointer-events: none;
+    .quem-foto-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .3s;
     }
+    .quem-foto:hover .quem-foto-overlay { background: rgba(0,0,0,.18); }
+    .quem-foto-overlay svg {
+      width: 36px; height: 36px; color: #fff;
+      opacity: 0; transform: scale(.7);
+      transition: opacity .3s, transform .3s;
+    }
+    .quem-foto:hover .quem-foto-overlay svg { opacity: .9; transform: scale(1); }
     .quem-foto-bar {
       position: absolute; bottom: 0; left: 0; right: 0; height: 5px;
       background: linear-gradient(90deg, var(--verm), var(--laranja), var(--amarelo));
@@ -314,116 +301,187 @@
       font-family: 'Montserrat', sans-serif; font-weight: 900;
       padding: 1rem 1.5rem; border-radius: 14px;
       box-shadow: 0 6px 20px rgba(0,0,0,.18);
-      text-align: center; line-height: 1.2; z-index: 2;
-      font-size: .95rem;
+      text-align: center; line-height: 1.2; z-index: 2; font-size: .95rem;
     }
     .quem-year strong { display: block; font-size: 2.2rem; }
+    .quem-mais { overflow: hidden; max-height: 0; opacity: 0; transition: max-height .55s ease, opacity .45s ease; }
+    .quem-mais.open { max-height: 600px; opacity: 1; }
+    .btn-ver-mais {
+      margin-top: 1.4rem; background: none; border: 2px solid var(--verm); color: var(--verm);
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .82rem;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: .55rem 1.6rem; border-radius: 50px; cursor: pointer;
+      transition: background .2s, color .2s; display: inline-block;
+    }
+    .btn-ver-mais:hover { background: var(--verm); color: #fff; }
+
+    /* ══════════════════════════════
+       POR QUE FAZENDINHA
+    ══════════════════════════════ */
+    #diferenciais { background: var(--preto); }
+    .dif-inner { max-width: 1100px; margin: 0 auto; }
+    .dif-header { text-align: center; margin-bottom: 3.5rem; }
+    .dif-header .section-title { color: #fff; }
+    .dif-header .section-tag { color: var(--amarelo); }
+    .dif-header .section-text { color: rgba(255,255,255,.5); margin: 0 auto; text-align: center; }
+    .dif-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    .dif-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 20px; padding: 2rem 1.6rem; text-align: center;
+      transition: background .25s, border-color .25s, transform .25s;
+    }
+    .dif-card:hover { background: rgba(255,255,255,.07); border-color: var(--amarelo); transform: translateY(-4px); }
+    .dif-icon {
+      width: 56px; height: 56px; background: var(--verm);
+      border-radius: 14px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+    }
+    .dif-icon svg { width: 26px; height: 26px; color: #fff; }
+    .dif-card h3 {
+      font-family: 'Montserrat', sans-serif; font-weight: 800;
+      font-size: 1.05rem; color: #fff; margin-bottom: .6rem;
+    }
+    .dif-card p { font-size: .88rem; color: rgba(255,255,255,.5); line-height: 1.7; }
 
     /* ══════════════════════════════
        NOSSA LOJA
     ══════════════════════════════ */
-    #o-local { background: #fff; }
+    #o-local { background: #fff; position: relative; overflow: hidden; }
     .local-inner { max-width: 1120px; margin: 0 auto; }
     .local-header { margin-bottom: 3rem; }
-    .local-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem; margin-bottom: 2rem;
-    }
+    .local-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 2rem; }
     .photo-slot {
       border-radius: 14px; overflow: hidden; aspect-ratio: 4/3;
-      background: #ddd; position: relative; cursor: zoom-in;
+      background: #ddd; position: relative; cursor: pointer;
     }
-    .photo-slot img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform .45s ease; display: block;
-    }
+    .photo-slot img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; display: block; }
     .photo-slot:hover img { transform: scale(1.06); }
-    .photo-slot::after {
-      content: '🔍';
-      position: absolute; bottom: 10px; right: 12px;
-      font-size: 1.25rem; opacity: .8; pointer-events: none;
+    .photo-overlay {
+      position: absolute; inset: 0; background: rgba(0,0,0,.0);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .3s;
     }
+    .photo-slot:hover .photo-overlay { background: rgba(0,0,0,.25); }
+    .photo-overlay svg {
+      width: 32px; height: 32px; color: #fff;
+      opacity: 0; transform: scale(.7);
+      transition: opacity .3s, transform .3s;
+    }
+    .photo-slot:hover .photo-overlay svg { opacity: 1; transform: scale(1); }
     .photo-slot-wide { grid-column: span 2; }
     .photo-slot-full { grid-column: span 3; }
-
     .local-invite {
-      background: var(--preto);
-      border-radius: 16px; padding: 2.6rem 3.2rem;
-      display: flex; align-items: center;
-      justify-content: space-between; gap: 2rem;
+      background: var(--preto); border-radius: 16px; padding: 2.6rem 3.2rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 2rem;
       border-left: 6px solid var(--verm);
     }
-    .local-invite p {
-      color: rgba(255,255,255,.82); font-size: 1.05rem;
-      line-height: 1.75; max-width: 560px;
-    }
+    .local-invite p { color: rgba(255,255,255,.82); font-size: 1.05rem; line-height: 1.75; max-width: 560px; }
     .local-invite p strong { color: var(--amarelo); }
     .btn-outline {
-      display: inline-block;
+      display: inline-flex; align-items: center; gap: .5rem;
       border: 2px solid var(--amarelo); color: var(--amarelo);
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .88rem; text-decoration: none;
       padding: .75rem 1.8rem; border-radius: 50px;
-      white-space: nowrap; transition: background .2s, color .2s;
+      white-space: nowrap; transition: background .2s, color .2s; min-height: 44px;
     }
     .btn-outline:hover { background: var(--amarelo); color: var(--preto); }
 
     /* ══════════════════════════════
+       CTA STRIP
+    ══════════════════════════════ */
+    .cta-strip {
+      background: linear-gradient(135deg, var(--verm) 0%, #a00f0f 100%);
+      padding: 3rem 5%;
+      display: flex; align-items: center; justify-content: center;
+      gap: 2rem; flex-wrap: wrap; text-align: center;
+    }
+    .cta-strip-text h2 {
+      font-family: 'Montserrat', sans-serif; font-weight: 900;
+      font-size: clamp(1.4rem, 3vw, 2rem); color: #fff; margin-bottom: .4rem;
+    }
+    .cta-strip-text p { color: rgba(255,255,255,.7); font-size: .95rem; }
+    .btn-whats-cta {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: var(--whats); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: .95rem; text-decoration: none;
+      padding: .9rem 2.2rem; border-radius: 50px;
+      box-shadow: 0 6px 24px rgba(37,211,102,.4);
+      transition: transform .2s, box-shadow .2s, background .2s;
+      white-space: nowrap; min-height: 48px;
+    }
+    .btn-whats-cta svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .btn-whats-cta:hover { background: var(--whats-dk); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(37,211,102,.5); }
+
+    /* ══════════════════════════════
+       DEPOIMENTOS
+    ══════════════════════════════ */
+    #depoimentos { background: var(--cinza-cl); }
+    .dep-inner { max-width: 1100px; margin: 0 auto; }
+    .dep-header { margin-bottom: 3rem; }
+    .dep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .dep-card {
+      background: #fff; border-radius: 18px; padding: 2rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,.06);
+      border-bottom: 3px solid transparent;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .dep-card:hover { border-color: var(--verm); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,.1); }
+    .dep-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+    .dep-stars svg { width: 16px; height: 16px; color: var(--amarelo); }
+    .dep-card blockquote { font-size: .95rem; color: #444; line-height: 1.8; margin-bottom: 1.4rem; font-style: italic; }
+    .dep-author { display: flex; align-items: center; gap: .75rem; }
+    .dep-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--verm); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .dep-author-info strong { display: block; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .9rem; color: var(--preto); }
+    .dep-author-info span { font-size: .78rem; color: var(--cinza); }
+
+    /* ══════════════════════════════
        MARCAS
     ══════════════════════════════ */
-    #marcas { background: var(--cinza-cl); }
+    #marcas { background: #fff; }
     .marcas-inner { max-width: 1100px; margin: 0 auto; }
+    .marcas-filtros { display: flex; gap: .6rem; flex-wrap: wrap; margin: 2rem 0; }
+    .filtro-btn {
+      background: none; border: 2px solid rgba(0,0,0,.12); color: var(--cinza);
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: .75rem;
+      letter-spacing: .07em; text-transform: uppercase;
+      padding: .45rem 1.2rem; border-radius: 50px; cursor: pointer;
+      transition: border-color .2s, color .2s, background .2s; min-height: 36px;
+    }
+    .filtro-btn:hover { border-color: var(--verm); color: var(--verm); }
+    .filtro-btn.ativo { background: var(--verm); border-color: var(--verm); color: #fff; }
     .marcas-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 1.2rem;
-      margin-top: 3rem;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1.2rem; margin-top: 1rem;
     }
     .marca-card {
-      background: #fff;
-      border-radius: 14px;
-      padding: 1.8rem 1.2rem;
-      text-align: center;
-      box-shadow: 0 4px 18px rgba(0,0,0,.07);
-      border-top: 3px solid transparent;
+      background: #fff; border-radius: 14px; padding: 1.8rem 1.2rem; text-align: center;
+      box-shadow: 0 4px 18px rgba(0,0,0,.07); border-top: 3px solid transparent;
       transition: transform .25s, box-shadow .25s, border-color .25s;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: .5rem;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5rem;
     }
-    .marca-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 32px rgba(0,0,0,.12);
-      border-color: var(--verm);
-    }
+    .marca-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,.12); border-color: var(--verm); }
     .marca-card.destaque { border-color: var(--amarelo); }
     .marca-card.destaque:hover { border-color: var(--amarelo); }
     a.marca-card { text-decoration: none; color: inherit; }
-    .marca-logo {
-      width: 90px; height: 52px;
-      object-fit: contain; object-position: center;
-      margin-bottom: .4rem;
-    }
+    .marca-logo { width: 90px; height: 52px; object-fit: contain; object-position: center; margin-bottom: .4rem; }
     .marca-logo-init {
-      width: 56px; height: 56px;
-      border-radius: 50%;
-      background: var(--verm);
-      color: #fff;
-      font-family: 'Montserrat', sans-serif; font-weight: 900;
-      font-size: 1.5rem;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--verm); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.5rem;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: .4rem;
-      flex-shrink: 0;
+      margin-bottom: .4rem; flex-shrink: 0;
     }
     .marca-card.destaque .marca-logo-init { background: var(--amarelo); color: var(--preto); }
-    .marca-nome {
-      font-family: 'Montserrat', sans-serif; font-weight: 800;
-      font-size: 1rem; color: var(--preto); line-height: 1.2;
-    }
-    .marca-cat {
-      font-size: .68rem; color: var(--cinza);
-      text-transform: uppercase; letter-spacing: .09em;
-      font-family: 'Montserrat', sans-serif; font-weight: 600;
-    }
+    .marca-nome { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: var(--preto); line-height: 1.2; }
+    .marca-cat { font-size: .68rem; color: var(--cinza); text-transform: uppercase; letter-spacing: .09em; font-family: 'Montserrat', sans-serif; font-weight: 600; }
     .marca-badge-of {
       font-size: .65rem; background: var(--amarelo); color: var(--preto);
       font-family: 'Montserrat', sans-serif; font-weight: 700;
@@ -434,22 +492,14 @@
     /* ══════════════════════════════
        FOOTER
     ══════════════════════════════ */
-    footer#contato {
-      background: var(--preto);
-      padding: 72px 5% 40px;
-      border-top: 3px solid var(--verm);
-    }
+    footer#contato { background: var(--preto); padding: 72px 5% 40px; border-top: 3px solid var(--verm); }
     .contato-inner { max-width: 1100px; margin: 0 auto; }
     .contato-top {
       display: grid; grid-template-columns: 1.4fr 1fr 1fr;
       gap: 3rem; padding-bottom: 3rem;
-      border-bottom: 1px solid rgba(255,255,255,.09);
-      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(255,255,255,.09); margin-bottom: 2.5rem;
     }
-    .contato-brand-logo {
-      height: 70px; object-fit: contain;
-      margin-bottom: 1.1rem;
-    }
+    .contato-brand-logo { height: 70px; object-fit: contain; margin-bottom: 1.1rem; }
     .contato-brand p { color: rgba(255,255,255,.45); font-size: .9rem; line-height: 1.75; max-width: 280px; }
     .contato-col h4 {
       font-family: 'Montserrat', sans-serif; font-weight: 700;
@@ -457,25 +507,23 @@
       letter-spacing: .13em; color: var(--amarelo); margin-bottom: 1.2rem;
     }
     .contato-item { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1rem; }
-    .contato-icon { font-size: 1.1rem; margin-top: .1rem; flex-shrink: 0; }
+    .contato-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: .15rem; color: var(--amarelo); }
+    .contato-icon svg { width: 20px; height: 20px; }
     .contato-item a, .contato-item span {
       color: rgba(255,255,255,.65); text-decoration: none;
       font-size: .92rem; line-height: 1.55; transition: color .2s;
     }
     .contato-item a:hover { color: var(--amarelo); }
-    .contato-bottom {
-      display: flex; align-items: center;
-      justify-content: space-between; gap: 1rem; flex-wrap: wrap;
-    }
+    .contato-bottom { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
     .contato-bottom p { color: rgba(255,255,255,.22); font-size: .74rem; }
     .maza-badge-footer {
-      display: inline-flex; align-items: center; gap: .5rem;
+      display: inline-flex; align-items: center; gap: .4rem;
       border: 1px solid rgba(245,197,24,.3); color: var(--amarelo);
       font-family: 'Montserrat', sans-serif; font-weight: 700;
       font-size: .68rem; letter-spacing: .09em; text-transform: uppercase;
       padding: .35rem 1rem; border-radius: 50px;
     }
-    .maza-badge-footer::before { content: '★ '; }
+    .maza-badge-footer svg { width: 12px; height: 12px; }
 
     /* ══════════════════════════════
        LIGHTBOX
@@ -484,107 +532,102 @@
       position: fixed; inset: 0; z-index: 999;
       background: rgba(0,0,0,.93);
       display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none;
-      transition: opacity .28s;
+      opacity: 0; pointer-events: none; transition: opacity .28s;
     }
     #lightbox.active { opacity: 1; pointer-events: all; }
     #lb-img {
-      max-width: 90vw; max-height: 88vh;
-      border-radius: 10px;
+      max-width: 90vw; max-height: 88vh; border-radius: 10px;
       box-shadow: 0 24px 80px rgba(0,0,0,.9);
-      transform: scale(.9); transition: transform .3s ease;
-      cursor: zoom-in;
+      transform: scale(.9); transition: transform .3s ease; cursor: zoom-in;
     }
     #lightbox.active #lb-img { transform: scale(1); }
     #lb-img.zoomed { transform: scale(1.75) !important; cursor: zoom-out; }
     #lb-close {
       position: absolute; top: 22px; right: 30px;
       color: rgba(255,255,255,.7); font-size: 2.2rem;
-      cursor: pointer; background: none; border: none;
-      line-height: 1; transition: color .2s;
+      cursor: pointer; background: none; border: none; line-height: 1; transition: color .2s;
     }
     #lb-close:hover { color: #fff; }
     #lb-caption {
       position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
       color: rgba(255,255,255,.45); font-size: .78rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      white-space: nowrap;
+      letter-spacing: .08em; text-transform: uppercase; white-space: nowrap;
     }
-
-    /* ══════════════════════════════
-       VER MAIS – QUEM SOMOS
-    ══════════════════════════════ */
-    .quem-mais {
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transition: max-height .55s ease, opacity .45s ease;
-    }
-    .quem-mais.open {
-      max-height: 600px;
-      opacity: 1;
-    }
-    .btn-ver-mais {
-      margin-top: 1.4rem;
-      background: none;
-      border: 2px solid var(--verm);
-      color: var(--verm);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700; font-size: .82rem;
-      letter-spacing: .08em; text-transform: uppercase;
-      padding: .55rem 1.6rem; border-radius: 50px;
-      cursor: pointer;
-      transition: background .2s, color .2s;
-      display: inline-block;
-    }
-    .btn-ver-mais:hover { background: var(--verm); color: #fff; }
 
     /* ══════════════════════════════
        FADE IN NO SCROLL
     ══════════════════════════════ */
-    .fade-in {
-      opacity: 0; transform: translateY(28px);
-      transition: opacity .65s ease, transform .65s ease;
-    }
+    .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .65s ease, transform .65s ease; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* ══════════════════════════════
        FLASHLIGHTS
     ══════════════════════════════ */
-    .flight {
-      position: absolute;
-      pointer-events: none;
-      border-radius: 50%;
-      opacity: 0;
-      z-index: 0;
-      transition: opacity 1.6s ease;
-    }
+    .flight { position: absolute; pointer-events: none; border-radius: 50%; opacity: 0; z-index: 0; transition: opacity 1.6s ease; }
     .flight.visible { opacity: 1; }
-    #quem-somos, #o-local { position: relative; overflow: hidden; }
 
     /* ══════════════════════════════
-       HAMBURGER MENU
+       BOTÃO WHATSAPP FLUTUANTE
     ══════════════════════════════ */
-    .nav-toggle {
-      display: none;
-      background: none; border: none;
-      cursor: pointer;
-      flex-direction: column; gap: 5px;
-      padding: 10px; margin-right: 4%;
+    .wa-floating {
+      position: fixed; bottom: 24px; left: 24px; z-index: 150;
+      width: 56px; height: 56px;
+      background: var(--whats); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5);
+      transition: transform .25s, box-shadow .25s, background .25s;
     }
-    .nav-toggle span {
-      display: block;
-      width: 24px; height: 2px;
-      background: #fff; border-radius: 2px;
-      transition: transform .3s ease, opacity .25s ease;
+    .wa-floating svg { width: 28px; height: 28px; color: #fff; }
+    .wa-floating:hover { background: var(--whats-dk); transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,.6); }
+    .wa-floating::before {
+      content: 'Fale conosco';
+      position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+      background: var(--preto); color: #fff;
+      font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: .72rem;
+      padding: .35rem .85rem; border-radius: 50px;
+      white-space: nowrap; opacity: 0; transition: opacity .2s; pointer-events: none;
     }
-    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+    .wa-floating:hover::before { opacity: 1; }
+
+    /* ══════════════════════════════
+       BOTÃO FLUTUANTE ML
+    ══════════════════════════════ */
+    .ml-floating {
+      position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 150;
+      background: #FFE600; color: #222; border-radius: 10px 0 0 10px;
+      padding: 1.4rem .75rem; display: flex; flex-direction: column;
+      align-items: center; gap: .6rem; text-decoration: none;
+      font-family: 'Montserrat', sans-serif; font-weight: 700;
+      font-size: .62rem; letter-spacing: .1em; text-transform: uppercase;
+      box-shadow: -4px 0 20px rgba(0,0,0,.2);
+      transition: transform .25s ease, box-shadow .25s;
+    }
+    .ml-floating:hover { transform: translateY(-50%) translateX(-5px); box-shadow: -8px 0 28px rgba(255,230,0,.45); }
+    .ml-floating .ml-icon { width: 22px; height: 22px; }
+    .ml-floating .ml-text { writing-mode: vertical-rl; transform: rotate(180deg); }
+
+    /* ══════════════════════════════
+       SCROLL TO TOP
+    ══════════════════════════════ */
+    #scrollTop {
+      position: fixed; bottom: 24px; right: 24px; z-index: 150;
+      width: 44px; height: 44px;
+      background: var(--preto); border: 2px solid rgba(255,255,255,.15);
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity .3s, transform .3s, background .2s, border-color .2s;
+      pointer-events: none;
+    }
+    #scrollTop.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+    #scrollTop:hover { background: var(--verm); border-color: var(--verm); }
+    #scrollTop svg { width: 18px; height: 18px; color: #fff; }
 
     /* ══════════════════════════════
        RESPONSIVO
     ══════════════════════════════ */
+    @media (max-width: 1024px) { .dif-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 900px) {
       .quem-inner { grid-template-columns: 1fr; gap: 3rem; }
       .quem-deco { display: none; }
@@ -594,87 +637,42 @@
       .local-invite { flex-direction: column; text-align: center; }
       .contato-top { grid-template-columns: 1fr; gap: 2rem; }
       .numeros-strip { gap: 2.5rem; }
+      .dep-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
     }
     @media (max-width: 768px) {
-      nav { justify-content: flex-end; padding: 0; }
-      .nav-toggle { display: flex; }
+      nav { padding: 0 5%; }
       .nav-links {
-        position: fixed;
-        top: 68px; left: 0; right: 0;
-        background: rgba(14,14,14,.98);
-        flex-direction: column;
-        align-items: center;
-        gap: 0;
-        max-height: 0; overflow: hidden;
+        position: fixed; top: 68px; left: 0; right: 0;
+        background: rgba(14,14,14,.98); flex-direction: column; align-items: center;
+        gap: 0; max-height: 0; overflow: hidden;
         transition: max-height .35s ease, padding .35s ease;
-        padding: 0;
-        border-bottom: 2px solid var(--verm);
+        padding: 0; border-bottom: 2px solid var(--verm);
       }
       .nav-links.open { max-height: 400px; padding: 1rem 0; }
       .nav-links li { width: 100%; text-align: center; }
-      .nav-links a {
-        display: block;
-        padding: .85rem 2rem;
-        font-size: .82rem;
-      }
+      .nav-links a { display: block; padding: .85rem 2rem; font-size: .82rem; }
       .nav-links a::after { display: none; }
+      .nav-toggle { display: flex; }
     }
     @media (max-width: 620px) {
+      .dif-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
       .local-grid { grid-template-columns: 1fr; }
       .photo-slot-wide { grid-column: span 1; }
       .photo-slot-full { grid-column: span 1; }
       .hero-ctas { flex-direction: column; align-items: center; }
-    }
-
-    /* ══════════════════════════════
-       BOTÃO FLUTUANTE ML
-    ══════════════════════════════ */
-    .ml-floating {
-      position: fixed;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 150;
-      background: #FFE600;
-      color: #222;
-      border-radius: 10px 0 0 10px;
-      padding: 1.4rem .75rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .6rem;
-      text-decoration: none;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: .62rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      box-shadow: -4px 0 20px rgba(0,0,0,.2);
-      transition: transform .25s ease, box-shadow .25s;
-    }
-    .ml-floating:hover {
-      transform: translateY(-50%) translateX(-5px);
-      box-shadow: -8px 0 28px rgba(255,230,0,.45);
-    }
-    .ml-floating .ml-icon { font-size: 1.25rem; }
-    .ml-floating .ml-text {
-      writing-mode: vertical-rl;
-      transform: rotate(180deg);
-    }
-    @media (max-width: 620px) {
       .ml-floating { display: none; }
+      .cta-strip { flex-direction: column; }
     }
+    @media (max-width: 420px) { .dif-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" onclick="toggleNav()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
+  <a href="#inicio" class="nav-logo">
+    <img src="logo-fazendinha.png" alt="Fazendinha Tintas" onerror="this.style.display='none'" />
+  </a>
   <ul class="nav-links" id="navLinks">
     <li><a href="#inicio">Início</a></li>
     <li><a href="#quem-somos">Quem Somos</a></li>
@@ -682,13 +680,15 @@
     <li><a href="#marcas">Marcas</a></li>
     <li><a href="#contato">Contato</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menu" onclick="toggleNav()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
 <section id="inicio">
   <div class="hero-logo-wrap">
-    <img src="logo-fazendinha.png" alt="Fazendinha Tintas – Colorindo Vidas"
-         onerror="this.style.display='none'" />
+    <img src="logo-fazendinha.png" alt="Fazendinha Tintas – Colorindo Vidas" onerror="this.style.display='none'" />
   </div>
 
   <div class="hero-maza-wrap">
@@ -699,36 +699,52 @@
     </div>
   </div>
 
-  <h1>COLORINDO VIDAS</h1>
-  <p class="hero-desde">DESDE 2004</p>
+  <div class="hero-badge">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    Colorindo Vidas Desde 2004
+  </div>
+
+  <h1>TINTA CERTA.<br><em>RESULTADO PERFEITO.</em></h1>
+  <p class="hero-desde">CURITIBA — PR</p>
   <p class="hero-sub">Tintas, texturas e acabamentos para cada projeto — com o atendimento especializado que você merece.</p>
 
   <div class="hero-ctas">
-    <a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener" class="btn-cta">💬 Fale com a gente</a>
-    <a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha" target="_blank" rel="noopener" class="btn-ml">🛒 Compre pelo Mercado Livre</a>
+    <a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener" class="btn-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Fale com a gente
+    </a>
+    <a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha" target="_blank" rel="noopener" class="btn-ml">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Compre pelo Mercado Livre
+    </a>
     <a href="#o-local" class="btn-ghost">Ver nossa loja →</a>
   </div>
 
   <div class="hero-smoke" id="heroSmoke"></div>
+
+  <div class="hero-scroll" onclick="document.getElementById('numeros').scrollIntoView({behavior:'smooth'})">
+    Conheça mais
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+  </div>
 </section>
 
 <!-- STRIP DE NÚMEROS -->
-<div class="numeros-strip">
+<div class="numeros-strip" id="numeros">
   <div class="num-item">
-    <strong>20+</strong>
+    <strong><span class="counter" data-target="20">0</span>+</strong>
     <span>Anos de experiência</span>
   </div>
   <div class="num-item">
     <strong>2004</strong>
     <span>Ano de fundação</span>
   </div>
-  <div class="num-item" style="display:flex;align-items:center;gap:.8rem">
-    <img src="logo-maza.jpg" alt="Maza"
-         style="width:80px;height:56px;object-fit:cover;clip-path:ellipse(44% 34% at 50% 50%)" />
-    <div>
-      <strong style="font-size:1rem">Maza</strong>
-      <span>Distribuidor Oficial</span>
-    </div>
+  <div class="num-item">
+    <strong><span class="counter" data-target="24">0</span>+</strong>
+    <span>Marcas parceiras</span>
+  </div>
+  <div class="num-item">
+    <strong>3ª</strong>
+    <span>Geração na gestão</span>
   </div>
 </div>
 
@@ -741,12 +757,12 @@
     <div class="quem-deco fade-in">
       <div class="quem-foto" onclick="openLightbox('loja-em-2012.jpeg','Fazendinha Tintas em 2012')">
         <img src="loja-em-2012.jpeg" alt="Fazendinha Tintas em 2012" />
+        <div class="quem-foto-overlay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
         <div class="quem-foto-bar"></div>
       </div>
-      <div class="quem-year">
-        <strong>2004</strong>
-        Fundados em
-      </div>
+      <div class="quem-year"><strong>2004</strong>Fundados em</div>
     </div>
 
     <div class="quem-texto fade-in">
@@ -771,6 +787,54 @@
 
 <div class="divider"></div>
 
+<!-- POR QUE FAZENDINHA -->
+<section id="diferenciais">
+  <div class="dif-inner">
+    <div class="dif-header fade-in">
+      <span class="section-tag" style="color:var(--amarelo)">Nossos diferenciais</span>
+      <h2 class="section-title" style="color:#fff">Por que escolher a <span style="color:var(--amarelo)">Fazendinha?</span></h2>
+      <p class="section-text" style="color:rgba(255,255,255,.5);margin:0 auto;text-align:center">Mais de duas décadas colorindo vidas em Curitiba. Veja o que nos diferencia.</p>
+    </div>
+    <div class="dif-grid fade-in">
+
+      <div class="dif-card">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Atendimento Especializado</h3>
+        <p>Consultores treinados para indicar o produto ideal para cada tipo de obra ou projeto.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+        </div>
+        <h3>Distribuidor Oficial Maza</h3>
+        <p>Único distribuidor oficial da Maza em Curitiba, com toda a linha disponível em estoque.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>+35 Anos de Mercado</h3>
+        <p>Desde 1989 no ramo de tintas, com credibilidade construída geração após geração em Curitiba.</p>
+      </div>
+
+      <div class="dif-card">
+        <div class="dif-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>24+ Marcas Parceiras</h3>
+        <p>Das melhores marcas nacionais e internacionais em tintas, ferramentas, abrasivos e mais.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- NOSSA LOJA -->
 <section id="o-local">
   <div class="local-inner">
@@ -783,30 +847,39 @@
     <div class="local-grid fade-in">
       <div class="photo-slot photo-slot-wide" onclick="openLightbox('loja-fora.jpeg','Fachada da Fazendinha Tintas')">
         <img src="loja-fora.jpeg" alt="Fachada da Fazendinha Tintas" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('interior.jpeg','Interior – Área de Tintas')">
         <img src="interior.jpeg" alt="Interior – Área de Tintas" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('sala-colorometria.jpeg','Sala de Colorimetria')">
         <img src="sala-colorometria.jpeg" alt="Sala de Colorimetria" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('interior-1.jpeg','Interior da Loja')">
         <img src="interior-1.jpeg" alt="Interior da Loja" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('pinceis.jpeg','Pincéis e Produtos Maza')">
         <img src="pinceis.jpeg" alt="Pincéis e Produtos Maza" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('cafe.jpeg','Café para os Clientes')">
         <img src="cafe.jpeg" alt="Café para os Clientes" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('colorimetria-2.jpeg','Máquina de Colorimetria')">
         <img src="colorimetria-2.jpeg" alt="Máquina de Colorimetria" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot" onclick="openLightbox('espatulas.jpeg','Espátulas e Ferramentas')">
         <img src="espatulas.jpeg" alt="Espátulas e Ferramentas" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
       <div class="photo-slot photo-slot-full" onclick="openLightbox('interior-2.jpeg','Nossa Loja por Dentro')">
         <img src="interior-2.jpeg" alt="Nossa Loja por Dentro" />
+        <div class="photo-overlay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
       </div>
     </div>
 
@@ -815,9 +888,93 @@
         <strong>Venha tomar um café com a gente!</strong><br />
         Nossa equipe está pronta para te receber, apresentar os produtos pessoalmente e ajudar a encontrar a solução ideal para o seu projeto.
       </p>
-      <a href="https://www.google.com/maps/place/R.+Raul+Pomp%C3%A9ia,+344+-+Cidade+Industrial,+Curitiba+-+PR,+81240-000/@-25.4770573,-49.3341684,17z/data=!3m1!4b1!4m6!3m5!1s0x94dce2fa12032c71:0x8fb77449d3e51a5e!8m2!3d-25.4770573!4d-49.3341684!16s%2Fg%2F11csp2b1lv?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener" class="btn-outline">Ver como chegar →</a>
+      <a href="https://www.google.com/maps/place/R.+Raul+Pomp%C3%A9ia,+344+-+Cidade+Industrial,+Curitiba+-+PR,+81240-000/@-25.4770573,-49.3341684,17z" target="_blank" rel="noopener" class="btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;flex-shrink:0"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Ver como chegar
+      </a>
     </div>
 
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <div class="cta-strip-text">
+    <h2>Tem um projeto em mente?</h2>
+    <p>Fale com nossos especialistas e receba a orientação ideal para a sua obra.</p>
+  </div>
+  <a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener" class="btn-whats-cta">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Fale com um especialista
+  </a>
+</div>
+
+<div class="divider"></div>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="dep-inner">
+    <div class="dep-header fade-in">
+      <span class="section-tag">O que dizem nossos clientes</span>
+      <h2 class="section-title">Clientes que <span>Confiam</span></h2>
+    </div>
+    <div class="dep-grid fade-in">
+
+      <div class="dep-card">
+        <div class="dep-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <blockquote>"Indico a Fazendinha para todos os meus clientes. O atendimento é impecável e sempre têm os produtos certos para cada projeto. A consultoria que recebo aqui faz toda a diferença no resultado final das obras."</blockquote>
+        <div class="dep-author">
+          <div class="dep-avatar">C</div>
+          <div class="dep-author-info">
+            <strong>Camila Rodrigues</strong>
+            <span>Arquiteta de Interiores</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <blockquote>"Sou cliente há mais de 10 anos. A variedade de marcas e a qualidade do atendimento são incomparáveis em Curitiba. Sempre encontro tudo o que preciso, das tintas às ferramentas, com ótimo preço."</blockquote>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:var(--laranja)">M</div>
+          <div class="dep-author-info">
+            <strong>Marcelo Ferreira</strong>
+            <span>Pintor Profissional</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="dep-card">
+        <div class="dep-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <blockquote>"Reformei toda minha casa com produtos da Fazendinha. Me ajudaram a escolher as cores e os produtos ideais para cada ambiente. O resultado ficou incrível e o atendimento foi super atencioso!"</blockquote>
+        <div class="dep-author">
+          <div class="dep-avatar" style="background:var(--amarelo);color:var(--preto)">A</div>
+          <div class="dep-author-info">
+            <strong>Ana Paula Gomes</strong>
+            <span>Cliente Residencial</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -833,148 +990,156 @@
       <p class="section-text">Trabalhamos com as principais marcas do mercado para oferecer a melhor solução em tintas, texturas, ferramentas e acessórios para o seu projeto.</p>
     </div>
 
+    <div class="marcas-filtros fade-in">
+      <button class="filtro-btn ativo" onclick="filtrarMarcas('todos', this)">Todos</button>
+      <button class="filtro-btn" onclick="filtrarMarcas('tintas', this)">Tintas &amp; Texturas</button>
+      <button class="filtro-btn" onclick="filtrarMarcas('ferramentas', this)">Ferramentas</button>
+      <button class="filtro-btn" onclick="filtrarMarcas('abrasivos', this)">Abrasivos</button>
+      <button class="filtro-btn" onclick="filtrarMarcas('automotivo', this)">Automotivo</button>
+    </div>
+
     <div class="marcas-grid fade-in">
 
-      <a href="https://www.maza.com.br" target="_blank" rel="noopener" class="marca-card destaque">
+      <a href="https://www.maza.com.br" target="_blank" rel="noopener" class="marca-card destaque" data-cat="tintas">
         <img class="marca-logo" src="logo-maza.jpg" alt="Maza" onerror="logoFallback(this)" />
         <div class="marca-nome">Maza</div>
         <div class="marca-cat">Tintas &amp; Texturas</div>
         <div class="marca-badge-of">Dist. Oficial</div>
       </a>
 
-      <a href="https://www.suvinil.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.suvinil.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="tintas">
         <img class="marca-logo" src="marca-suvinil.jpeg" alt="Suvinil" onerror="logoFallback(this)" />
         <div class="marca-nome">Suvinil</div>
         <div class="marca-cat">Tintas &amp; Texturas</div>
       </a>
 
-      <a href="https://www.lukscolor.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.lukscolor.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="tintas">
         <img class="marca-logo" src="marca-lukscolor.jepg.jfif" alt="Lukscolor" onerror="logoFallback(this)" />
         <div class="marca-nome">Lukscolor</div>
         <div class="marca-cat">Tintas &amp; Complementos</div>
       </a>
 
-      <a href="https://brasilux.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://brasilux.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="tintas">
         <img class="marca-logo" src="marca-brasilux.jpeg" alt="Brasilux" onerror="logoFallback(this)" />
         <div class="marca-nome">Brasilux</div>
         <div class="marca-cat">Tintas &amp; Vernizes</div>
       </a>
 
-      <a href="https://www.ciacollor.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.ciacollor.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="tintas">
         <img class="marca-logo" src="marca-ciacollor.jpeg" alt="Ciacollor" onerror="logoFallback(this)" />
         <div class="marca-nome">Ciacollor</div>
         <div class="marca-cat">Tintas &amp; Complementos</div>
       </a>
 
-      <a href="http://www.tintascastelense.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="http://www.tintascastelense.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="tintas">
         <img class="marca-logo" src="marca-castelense.jpeg" alt="Castelense" onerror="logoFallback(this)" />
         <div class="marca-nome">Castelense</div>
         <div class="marca-cat">Tintas</div>
       </a>
 
-      <a href="https://www.chesiquimica.com.br/site/linha-etaniz/" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.chesiquimica.com.br/site/linha-etaniz/" target="_blank" rel="noopener" class="marca-card" data-cat="tintas">
         <img class="marca-logo" src="marca-etaniz.jpeg" alt="Etaniz" onerror="logoFallback(this)" />
         <div class="marca-nome">Etaniz</div>
         <div class="marca-cat">Impermeabilizantes</div>
       </a>
 
-      <a href="https://unipega.com" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://unipega.com" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-unipega.jpeg" alt="Unipega" onerror="logoFallback(this)" />
         <div class="marca-nome">Unipega</div>
         <div class="marca-cat">Colas &amp; Adesivos</div>
       </a>
 
-      <a href="https://www.pinceisatlas.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.pinceisatlas.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-atlas.jpeg" alt="Atlas" onerror="logoFallback(this)" />
         <div class="marca-nome">Atlas</div>
         <div class="marca-cat">Pincéis &amp; Rolos</div>
       </a>
 
-      <a href="https://condor.ind.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://condor.ind.br" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-condor.jpeg" alt="Condor" onerror="logoFallback(this)" />
         <div class="marca-nome">Condor</div>
         <div class="marca-cat">Pincéis &amp; Ferramentas</div>
       </a>
 
-      <a href="https://www.pinceisroma.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.pinceisroma.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-roma.jpeg" alt="Roma" onerror="logoFallback(this)" />
         <div class="marca-nome">Roma</div>
         <div class="marca-cat">Pincéis &amp; Rolos</div>
       </a>
 
-      <a href="https://www.nortonabrasives.com/pt-br/home" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="marca-norton.jpeg" alt="Norton" onerror="logoFallback(this)" />
-        <div class="marca-nome">Norton</div>
-        <div class="marca-cat">Abrasivos &amp; Lixas</div>
-      </a>
-
-      <a href="https://www.mirka.com" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="marca-mirka.png" alt="Mirka" onerror="logoFallback(this)" />
-        <div class="marca-nome">Mirka</div>
-        <div class="marca-cat">Abrasivos</div>
-      </a>
-
-      <a href="https://purplex.com.br" target="_blank" rel="noopener" class="marca-card">
-        <img class="marca-logo" src="marca-purplex.webp" alt="Purplex" onerror="logoFallback(this)" />
-        <div class="marca-nome">Purplex</div>
-        <div class="marca-cat">Lixas &amp; Abrasivos</div>
-      </a>
-
-      <a href="https://orbiquimica.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://orbiquimica.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-orbiflex.png" alt="Orbiflex" onerror="logoFallback(this)" />
         <div class="marca-nome">Orbiflex</div>
         <div class="marca-cat">Selantes &amp; Adesivos</div>
       </a>
 
-      <a href="https://www.sigmatools.com.br/site/" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.sigmatools.com.br/site/" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-sgt.pbg.png" alt="SGT Tools" onerror="logoFallback(this)" />
         <div class="marca-nome">SGT Tools</div>
         <div class="marca-cat">Ferramentas</div>
       </a>
 
-      <a href="https://www.vonder.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.vonder.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-vonder.png" alt="Vonder" onerror="logoFallback(this)" />
         <div class="marca-nome">Vonder</div>
         <div class="marca-cat">Ferramentas Elétricas</div>
       </a>
 
-      <a href="https://www.dwtbrasil.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.dwtbrasil.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="ferramentas">
         <img class="marca-logo" src="marca-dwt.png" alt="DWT" onerror="logoFallback(this)" />
         <div class="marca-nome">DWT</div>
         <div class="marca-cat">Ferramentas Elétricas</div>
       </a>
 
-      <a href="https://www.kers.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.nortonabrasives.com/pt-br/home" target="_blank" rel="noopener" class="marca-card" data-cat="abrasivos">
+        <img class="marca-logo" src="marca-norton.jpeg" alt="Norton" onerror="logoFallback(this)" />
+        <div class="marca-nome">Norton</div>
+        <div class="marca-cat">Abrasivos &amp; Lixas</div>
+      </a>
+
+      <a href="https://www.mirka.com" target="_blank" rel="noopener" class="marca-card" data-cat="abrasivos">
+        <img class="marca-logo" src="marca-mirka.png" alt="Mirka" onerror="logoFallback(this)" />
+        <div class="marca-nome">Mirka</div>
+        <div class="marca-cat">Abrasivos</div>
+      </a>
+
+      <a href="https://purplex.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="abrasivos">
+        <img class="marca-logo" src="marca-purplex.webp" alt="Purplex" onerror="logoFallback(this)" />
+        <div class="marca-nome">Purplex</div>
+        <div class="marca-cat">Lixas &amp; Abrasivos</div>
+      </a>
+
+      <a href="https://www.kers.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="automotivo">
         <img class="marca-logo" src="marca-kers.jpeg" alt="Kers" onerror="logoFallback(this)" />
         <div class="marca-nome">Kers</div>
         <div class="marca-cat">Polimentos &amp; Cuidados</div>
       </a>
 
-      <a href="https://menzerna.com" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://menzerna.com" target="_blank" rel="noopener" class="marca-card" data-cat="automotivo">
         <img class="marca-logo" src="marca-menzerna.png" alt="Menzerna" onerror="logoFallback(this)" />
         <div class="marca-nome">Menzerna</div>
         <div class="marca-cat">Polimentos</div>
       </a>
 
-      <a href="https://pt.roberlo.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://pt.roberlo.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="automotivo">
         <img class="marca-logo" src="marca-roberlo.png" alt="Roberlo" onerror="logoFallback(this)" />
         <div class="marca-nome">Roberlo</div>
         <div class="marca-cat">Tintas Automotivas</div>
       </a>
 
-      <a href="https://www.autoamerica.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://www.autoamerica.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="automotivo">
         <img class="marca-logo" src="marca-autoamerica.png" alt="Autoamerica" onerror="logoFallback(this)" />
         <div class="marca-nome">Autoamerica</div>
         <div class="marca-cat">Produtos Automotivos</div>
       </a>
 
-      <a href="https://eurotechniker.com.br" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://eurotechniker.com.br" target="_blank" rel="noopener" class="marca-card" data-cat="automotivo">
         <img class="marca-logo" src="marca-eurotechniker.png" alt="Eurotechniker" onerror="logoFallback(this)" />
         <div class="marca-nome">Eurotechniker</div>
         <div class="marca-cat">Produtos Automotivos</div>
       </a>
 
-      <a href="https://pinceiscompel.com.br/" target="_blank" rel="noopener" class="marca-card">
+      <a href="https://pinceiscompel.com.br/" target="_blank" rel="noopener" class="marca-card" data-cat="automotivo">
         <img class="marca-logo" src="marca-compel.jpeg" alt="Compel" onerror="logoFallback(this)" />
         <div class="marca-nome">Compel</div>
         <div class="marca-cat">Complementos Automotivos</div>
@@ -999,7 +1164,7 @@
       <div class="contato-col">
         <h4>Entre em Contato</h4>
         <div class="contato-item">
-          <span class="contato-icon">📞</span>
+          <span class="contato-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.18 2 2 0 0 1 3.59 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.18 6.18l1.41-1.41a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
           <div>
             <span style="display:block;color:rgba(255,255,255,.32);font-size:.71rem;margin-bottom:.2rem">Telefone Fixo</span>
             <a href="tel:+554132456844">(41) 3245-6844</a><br>
@@ -1007,14 +1172,14 @@
           </div>
         </div>
         <div class="contato-item">
-          <span class="contato-icon">🔗</span>
+          <span class="contato-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
           <div>
             <span style="display:block;color:rgba(255,255,255,.32);font-size:.71rem;margin-bottom:.2rem">Nossos Links</span>
             <a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener">linktr.ee/tintasfazendinha</a>
           </div>
         </div>
         <div class="contato-item">
-          <span class="contato-icon">🛒</span>
+          <span class="contato-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></span>
           <div>
             <span style="display:block;color:rgba(255,255,255,.32);font-size:.71rem;margin-bottom:.2rem">Compre Online</span>
             <a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha" target="_blank" rel="noopener" style="color:#FFE600;font-weight:600">Mercado Livre →</a>
@@ -1025,11 +1190,11 @@
       <div class="contato-col">
         <h4>Nossa Localização</h4>
         <div class="contato-item">
-          <span class="contato-icon">📍</span>
+          <span class="contato-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
           <span>Rua Raul Pompeia, 344<br>Fazendinha – Curitiba / PR</span>
         </div>
         <div class="contato-item">
-          <span class="contato-icon">🕐</span>
+          <span class="contato-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
           <span>Seg–Sex: 08h–18h<br>Sábado: 08h–12h</span>
         </div>
       </div>
@@ -1037,7 +1202,10 @@
 
     <div class="contato-bottom">
       <p>© 2004–2026 Fazendinha Comércio de Tintas. Todos os direitos reservados.</p>
-      <div class="maza-badge-footer">Distribuidor Oficial Maza</div>
+      <div class="maza-badge-footer">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Distribuidor Oficial Maza
+      </div>
     </div>
 
   </div>
@@ -1050,8 +1218,25 @@
   <div id="lb-caption"></div>
 </div>
 
+<!-- WHATSAPP FLUTUANTE -->
+<a href="https://linktr.ee/tintasfazendinha" target="_blank" rel="noopener"
+   class="wa-floating" title="Fale conosco" aria-label="Fale conosco">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- BOTÃO FLUTUANTE MERCADO LIVRE -->
+<a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha" target="_blank" rel="noopener"
+   class="ml-floating" title="Compre no Mercado Livre">
+  <svg class="ml-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+  <span class="ml-text">Compre Online</span>
+</a>
+
+<!-- SCROLL TO TOP -->
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <script>
-  /* ── Fallback visual para logos de marcas ── */
   function logoFallback(img) {
     const div = document.createElement('div');
     div.className = 'marca-logo-init';
@@ -1060,22 +1245,47 @@
     img.remove();
   }
 
-  /* ── Sombra sobe do texto e engole a logo no scroll ── */
   const smoke  = document.getElementById('heroSmoke');
   const heroEl = document.getElementById('inicio');
+  const scrollTopBtn = document.getElementById('scrollTop');
+
   window.addEventListener('scroll', () => {
     const prog = Math.min(window.scrollY / (heroEl.offsetHeight * 0.5), 1);
     smoke.style.opacity   = prog;
     smoke.style.transform = `translateY(${(1 - prog) * 55}%)`;
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 500);
+    updateActiveNav();
   }, { passive: true });
 
-  /* ── Fade-in no scroll ── */
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  /* ── Lightbox ── */
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const duration = 1200;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target);
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target;
+    }
+    requestAnimationFrame(update);
+  }
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.counter').forEach(animateCounter);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  counterObs.observe(document.querySelector('.numeros-strip'));
+
   function openLightbox(src, caption) {
     const lb  = document.getElementById('lightbox');
     const img = document.getElementById('lb-img');
@@ -1092,12 +1302,9 @@
   function handleLbClick(e) {
     if (e.target === document.getElementById('lightbox')) closeLightbox();
   }
-  function toggleZoom(img) {
-    img.classList.toggle('zoomed');
-  }
+  function toggleZoom(img) { img.classList.toggle('zoomed'); }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 
-  /* ── Ver mais – Quem Somos ── */
   function toggleVerMais() {
     const bloco = document.getElementById('quemMaisTexto');
     const btn   = document.getElementById('btnVerMais');
@@ -1105,7 +1312,6 @@
     btn.textContent = open ? 'Ver menos ↑' : 'Ver mais ↓';
   }
 
-  /* ── Hamburger Menu ── */
   function toggleNav() {
     document.getElementById('navLinks').classList.toggle('open');
     document.getElementById('navToggle').classList.toggle('open');
@@ -1117,59 +1323,56 @@
     });
   });
 
-  /* ── Flashlights ── */
+  const sections = ['inicio','quem-somos','diferenciais','o-local','depoimentos','marcas','contato'];
+  const navLinks = document.querySelectorAll('.nav-links a');
+  function updateActiveNav() {
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 100) current = id;
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+
+  function filtrarMarcas(cat, btn) {
+    document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+    btn.classList.add('ativo');
+    document.querySelectorAll('.marca-card').forEach(card => {
+      card.style.display = (cat === 'todos' || card.dataset.cat === cat) ? '' : 'none';
+    });
+  }
+
   (function () {
-    /* [seção, top%, left%, largura, altura, cor, opacidade] */
     const lights = [
       ['#inicio',      15,  -5, 500, 500, '#cc1717', .18],
       ['#inicio',      50,  72, 420, 420, '#f5c518', .13],
       ['#inicio',      70,  30, 380, 380, '#f07322', .10],
-
       ['#quem-somos',   5,  80, 460, 460, '#cc1717', .12],
       ['#quem-somos',  55,  -8, 400, 400, '#f5c518', .10],
-      ['#quem-somos',  75,  55, 340, 340, '#f07322', .09],
-
       ['#o-local',     10,  -5, 440, 440, '#f5c518', .11],
       ['#o-local',     60,  78, 400, 400, '#cc1717', .12],
-      ['#o-local',     35,  40, 360, 360, '#f07322', .08],
     ];
-
     lights.forEach(([sel, top, left, w, h, color, alpha]) => {
       const parent = document.querySelector(sel);
       if (!parent) return;
-
       const el = document.createElement('div');
       el.className = 'flight';
       Object.assign(el.style, {
-        top:    top  + '%',
-        left:   left + '%',
-        width:  w + 'px',
-        height: h + 'px',
+        top: top + '%', left: left + '%',
+        width: w + 'px', height: h + 'px',
         background: `radial-gradient(ellipse at center, ${color} 0%, transparent 70%)`,
         opacity: 0,
-        '--final-opacity': alpha,
       });
       parent.appendChild(el);
-
       const obs = new IntersectionObserver(([e]) => {
-        if (e.isIntersecting) {
-          el.style.opacity = alpha;
-          obs.disconnect();
-        }
+        if (e.isIntersecting) { el.style.opacity = alpha; obs.disconnect(); }
       }, { threshold: .08 });
       obs.observe(parent);
     });
   })();
 </script>
-
-<!-- BOTÃO FLUTUANTE MERCADO LIVRE -->
-<a href="https://www.mercadolivre.com.br/pagina/tintasfazendinha"
-   target="_blank" rel="noopener"
-   class="ml-floating"
-   title="Compre no Mercado Livre">
-  <span class="ml-icon">🛒</span>
-  <span class="ml-text">Compre Online</span>
-</a>
 
 </body>
 </html>
